@@ -1,11 +1,13 @@
 package org.example;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("1.Цифры;\n2.Кириллица;\n3.Латиница\nВыберите что будете угадывать: ");
+        System.out.println("1.Цифры;\n2.Кириллица;\n3.Латиница;\nВыберите что будете угадывать: ");
         int choice = Integer.parseInt(scanner.nextLine());
         AbstractGame nGame = null;
         switch (choice){
@@ -23,13 +25,23 @@ public class Main {
                 break;
         }
 
-        nGame.start(4, 10);
+
+
+        nGame.start(4, 3);
+        Map<String, String> history = new HashMap<>();
         while (nGame.getGameStatus().equals(GameStatus.START)){
             System.out.println("Ваш ход: ");
             String value = scanner.nextLine();
-
             Answer answer = nGame.inputValue(value);
+            history.put(value, answer.toString());
             System.out.println(answer);
+        }
+
+        System.out.println("Хотите посмотреть историю? Y/N");
+        String ans = scanner.nextLine();
+
+        if (ans.toUpperCase().equals("Y")){
+            System.out.println(history);
         }
 
         scanner.close();
